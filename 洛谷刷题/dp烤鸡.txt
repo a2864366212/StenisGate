@@ -1,0 +1,36 @@
+#include<iostream>
+#include<cstring>
+#include<vector>
+using namespace std;
+vector<string>ans;
+string temp;
+void deeptrack(int index,int n,int sum)
+{/*end is the tenth ->index = 10*/
+	if(sum>n){
+		temp.erase(temp.begin(),temp.end());
+		return ;
+	}
+	if(index==11&&sum==n){
+		ans.push_back(temp);
+		temp.erase(temp.begin(),temp.end());
+		return ;
+	}else{
+		for(int i=1;i<=3;i++){
+			char ch=i+'0';
+			temp.push_back(ch);
+			deeptrack(index+1,n,sum+i);
+		}		
+	}
+}
+int main()
+{
+	int n;
+	cin>>n;
+	deeptrack(1,n,0);
+	
+	for(int i=0;i<ans.size();i++)
+	{
+		cout<<ans[i]<<endl;
+	}
+	return 0;
+} 
