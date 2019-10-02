@@ -1,0 +1,82 @@
+#include<iostream>
+#include<list>
+#include<stack>
+#include<cstring>
+#include<cstdio>
+#include<cstdlib>
+using namespace std;
+list<int>solution;
+int isInMid[10000];
+int main()
+{
+	int n;
+	while(1)
+	{
+		cin>>n;
+		if(n==0)
+		{
+			break;
+		}
+		while(1)
+		{
+			stack<int>ans;
+			stack<int>mid;
+		
+			int temp;
+			cin>>temp;
+			if(temp==0)
+			break;
+			ans.push(temp);
+			for(int i=1;i<n;i++)
+			{
+				cin>>temp;
+				ans.push(temp);
+			}	
+			memset(isInMid,0,10000*sizeof(int));
+			int NowMax=n;
+			while(1)
+			{
+				if(NowMax==0)
+				{
+					cout<<"Yes"<<endl;
+					break;
+				}
+				bool AnsHasMax=false;
+				if(isInMid[NowMax]==0/*max is in stack named ans*/)
+				AnsHasMax=true;
+				
+				if(AnsHasMax)
+				{
+					while(!ans.empty())
+					{
+						if(ans.top()!=NowMax)	
+						{/*max has not been found in stack--ans*/
+							mid.push( ans.top() );
+							isInMid[ ans.top() ]=1;
+							ans.pop();		
+						}
+						else{/*max has been found in stack--ans*/
+							NowMax-=1;
+							ans.pop();	
+							break;
+						}
+					}					
+				}
+				else{/*judge the situation of stack--mid*/
+					if(mid.top()!=NowMax)
+					{
+						cout<<"No"<<endl;
+						break;
+					}else{
+						mid.pop();
+						NowMax-=1;
+					}
+				}
+							
+			}
+			while(!ans.empty())
+			ans.pop();
+		}
+	}
+	return 0;
+}
